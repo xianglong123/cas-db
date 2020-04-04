@@ -1,0 +1,6 @@
+rootProject.name = 'cas-db'
+include 'cas-db-dao'
+include 'cas-db-common'
+include 'cas-db-service'
+include 'cas-db-web'
+

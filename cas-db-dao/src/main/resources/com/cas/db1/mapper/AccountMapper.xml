@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cas.db1.mapper.AccountMapper">
+
+    <resultMap type="com.cas.db1.domain.Account" id="AccountMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="balance" column="balance" jdbcType="NUMERIC"/>
+        <result property="freezeAmount" column="freeze_amount" jdbcType="NUMERIC"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AccountMap">
+        select a.id, a.user_id, a.balance, a.freeze_amount, a.create_time, a.update_time from tcc_account.account a, tcc_order.`order` b where a.user_id = b.user_id
+            and a.user_id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AccountMap">
+        select
+          id, user_id, balance, freeze_amount, create_time, update_time
+        from tcc_account.account
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AccountMap">
+        select
+          id, user_id, balance, freeze_amount, create_time, update_time
+        from tcc_account.account
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="balance != null">
+                and balance = #{balance}
+            </if>
+            <if test="freezeAmount != null">
+                and freeze_amount = #{freezeAmount}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into tcc_account.account(user_id, balance, freeze_amount, create_time, update_time)
+        values (#{userId}, #{balance}, #{freezeAmount}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tcc_account.account
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="balance != null">
+                balance = #{balance},
+            </if>
+            <if test="freezeAmount != null">
+                freeze_amount = #{freezeAmount},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tcc_account.account where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,59 @@
+#配置端口
+server:
+  port: 8081
+  #最外层的路径
+#  context-path: /cas
+spring:
+  profiles:
+    active: test
+  datasource:
+    db1:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/tcc_account?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      username: root
+      password: 123456
+      type: com.alibaba.druid.pool.DruidDataSource
+    db2:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/tcc_order?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      username: root
+      password: 123456
+      type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  aop:
+    auto: true
+    proxy-target-class: false
+  redis:
+    pool:
+      max-idle: 10
+      min-idle: 5
+      max-wait: 2000
+      max-active: 10
+    timeout: 2000
+  cache:
+    cache-names: redisCache
+    type: REDIS
+    redis:
+      time-to-live: 600000
+mybatis:
+  #配置mapper xml文件所在的路径
+  mapper-locations: classpath:com.cas.dao.com.cas.mapper/*.xml
+  #Mybais 扫描别名包， 和注解@Alias联用
+  type-aliases-package: com.cas.pojo
+  #配置typeHandler 的扫描包
+#  typeHandler-handlers-package: com.cas.typeHandler
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    interceptors: com.sso.util.interceptorceptor.MybatisInterceptor
+# 日志配置
+logging:
+  config: classpath:logback-spring.xml
+
+
+
+
+
+
