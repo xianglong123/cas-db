@@ -2,7 +2,7 @@
 <configuration>
 
 	<property name="server_name" value="operation" />
-	<property name="log_dir" value="/Users/xianglong/IdeaProjects/xlSSO/sso-web-upm/logs" />
+	<property name="log_dir" value="/Users/xianglong/IdeaProjects/cas-db/cas-db-web/logs" />
 	<property name="maxFileSize" value="50MB" />
 	<property name="maxHistory" value="180" />
 
@@ -70,7 +70,7 @@
 	</logger>
 
 	<springProfile name="default,dev,test">
-		<logger name="com.cas.dao.mapper" level="TRACE">
+		<logger name="com.cas.*.mapper" level="TRACE">
 		</logger>
 
 		<logger name="com.cas" level="INFO">

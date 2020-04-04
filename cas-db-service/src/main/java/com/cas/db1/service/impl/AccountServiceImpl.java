@@ -8,6 +8,7 @@ import com.cas.db2.domain.Order;
 import com.cas.db2.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -71,14 +72,19 @@ public class AccountServiceImpl implements AccountService {
      * @return 实例对象
      */
     @Override
+    @Transactional
     public Account update(Account account) {
-        accountMapper.update(account);
+        try {
+            accountMapper.update(account);
+            Order order = new Order();
+            order.setId(1L);
+            order.setCreateTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+            orderMapper.update(order);
+            throw new Exception("sss");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Order order = new Order();
-        order.setId(1L);
-//        order.setCreateTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-
-        orderMapper.update(order);
         return queryById(account.getId());
     }
 

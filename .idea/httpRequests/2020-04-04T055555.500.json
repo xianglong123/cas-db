@@ -1,8 +1,0 @@
-{
-  "timestamp": 1585994155664,
-  "status": 500,
-  "error": "Internal Server Error",
-  "exception": "org.apache.ibatis.binding.BindingException",
-  "message": "Invalid bound statement (not found): com.cas.db1.service.AccountService.queryById",
-  "path": "/account/selectOne"
-}

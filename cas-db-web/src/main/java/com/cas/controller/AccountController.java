@@ -2,13 +2,14 @@ package com.cas.controller;
 
 import com.cas.db1.domain.Account;
 import com.cas.db1.service.AccountService;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 /**
@@ -19,6 +20,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("account")
+@Slf4j
 public class AccountController {
     /**
      * 服务对象
@@ -34,6 +36,7 @@ public class AccountController {
      */
     @GetMapping("selectOne")
     public Account selectOne(String id) {
+        log.info(id);
         return accountService.queryById(id);
     }
 
@@ -41,7 +44,7 @@ public class AccountController {
     public Account update(String id) {
         Account account = new Account();
         account.setId(id);
-//        account.setUpdateTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        account.setUpdateTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         return accountService.update(account);
     }
 
