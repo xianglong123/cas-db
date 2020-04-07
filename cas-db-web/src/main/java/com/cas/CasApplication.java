@@ -19,16 +19,14 @@ public class CasApplication {
 
     public static void main(String[] args) {
         try {
-            System.out.println("ok");
             SpringApplication.run(CasApplication.class, args);
-            
-            System.out.println("#############################################");
-            System.out.println("#####-----启动成功-----#####");
-            System.out.println("#############################################");
+            log.info("#############################################");
+            log.info("#####-----启动成功-----#####");
+            log.info("#############################################");
         } catch (Exception e) {
-            System.out.println("#############################################");
-            System.out.println("#####启动失败#####" + e);
-            System.out.println("#############################################");
+            log.info("#############################################");
+            log.info("#####启动失败#####");
+            log.info("#############################################");
         }
     }
 }

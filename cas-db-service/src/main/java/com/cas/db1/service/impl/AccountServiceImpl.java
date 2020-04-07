@@ -72,18 +72,14 @@ public class AccountServiceImpl implements AccountService {
      * @return 实例对象
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Account update(Account account) {
-        try {
             accountMapper.update(account);
             Order order = new Order();
             order.setId(1L);
             order.setCreateTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
             orderMapper.update(order);
-            throw new Exception("sss");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            int i = 1/0;
 
         return queryById(account.getId());
     }
