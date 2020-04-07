@@ -54,9 +54,9 @@ spring:
     type: REDIS
     redis:
       time-to-live: 600000
-  # 禁用分布式事务
+  # 禁用分布式事务,默认 true
   jta:
-    enabled: false
+    enabled: true
 mybatis:
   #配置mapper xml文件所在的路径
   mapper-locations: classpath:com.cas.dao.com.cas.mapper/*.xml

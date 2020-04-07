@@ -2,6 +2,7 @@ package com.cas.config.jta;
 
 import com.cas.config.db2DateSource.DB2Properties;
 import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,12 +12,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+@Slf4j
 @Configuration
 @MapperScan(basePackages = "com.cas.db2.mapper", sqlSessionTemplateRef = "db2SqlSessionTemplate")
 public class DataSource2Config {
@@ -24,9 +27,18 @@ public class DataSource2Config {
     private DB2Properties db2Properties;
 
     @Autowired
+    private Environment env;
+
+    @Autowired
     public void setDb2Properties(DB2Properties db2Properties) {
         this.db2Properties = db2Properties;
     }
+
+    @PostConstruct
+    public void getDataSource() {
+        log.info("配置信息" + env.getProperty("spring.profiles.active"));
+    }
+
 
     @Bean
     public DataSource db2DataSource() throws SQLException {
